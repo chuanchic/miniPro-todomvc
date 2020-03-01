@@ -1,0 +1,33 @@
+<!-- 头部 -->
+<view class="header">
+  <image src="/assets/plus.png"></image>
+  <!-- value="{{name}}" 的作用是 当 this.data.name = '' 的时候可以清空输入框 -->
+  <!-- bindinput='getName' 的作用是 输入内容的时候 自动给 this.data.name 赋值 -->
+  <input bindinput='getName' bindconfirm='addTodo' value="{{name}}" placeholder='Anything here...'></input>
+</view>
+
+<block wx:if="{{list.length > 0}}">
+  <!-- 列表 -->
+  <view class="list">
+    <view class="item" wx:for="{{list}}" wx:key="id">
+      <!-- 设置 icon 大小 size="18" -->
+      <icon data-id="{{item.id}}" bindtap='change' size="18" type="{{item.completed?'success':'circle'}}"></icon>
+      <text class="{{item.completed?'completed':''}}">{{item.name}}</text>
+      <icon wx:if="{{list.length - leftCount > 0}}" size="18" type="clear" bindtap='delTodo' data-id="{{item.id}}"></icon>
+    </view>
+  </view>
+
+  <!-- 底部 -->
+  <view class="footer">
+    <text bindtap='toggleAll'>toggle all</text>
+    <text>{{leftCount}} items left</text>
+    <text bindtap="clearCompleted">clear completed</text>
+  </view>
+</block>
+<block wx:else>
+  <!-- 提示消息 -->
+  <view class="tips">
+    <view class="title">Congratulations</view>
+    <view class="content">There's no more work left</view>
+  </view>
+</block>  
